@@ -103,9 +103,10 @@ def predict_price(data: HouseData):
 
     return {"estimated_price": price}
 
-app.mount("/static", StaticFiles(directory=client_path), name="static")
+app.mount("/static", StaticFiles(directory="../client"), name="static")
 
 @app.get("/")
-def serve_home():
-    return FileResponse("../client/index.html")
+def read_root():
+    file_path = os.path.join(BASE_DIR, "..", "client", "index.html")
+    return FileResponse(file_path)
 
