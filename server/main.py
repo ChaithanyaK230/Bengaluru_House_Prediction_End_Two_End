@@ -22,8 +22,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CLIENT_DIR = os.path.join(BASE_DIR, "..", "client")
+BASE_DIR = ROOT_DIR = Path(__file__).resolve().parent.parent
+CLIENT_DIR = CLIENT_DIR = ROOT_DIR / "client"
 
 model_path = os.path.join(BASE_DIR, "model", "banglore_home_prices_model.pickle")
 columns_path = os.path.join(BASE_DIR, "model", "columns.json")
@@ -107,7 +107,9 @@ app.mount("/static", StaticFiles(directory=CLIENT_DIR), name="static")
 
 @app.get("/")
 def read_root():
-    return FileResponse(os.path.join(CLIENT_DIR, "index.html"))
+    return FileResponse(CLIENT_DIR / "index.html")
     
-    
+print("ROOT_DIR:", ROOT_DIR)
+print("CLIENT_DIR:", CLIENT_DIR)
+print("Exists:", CLIENT_DIR.exists())
 
