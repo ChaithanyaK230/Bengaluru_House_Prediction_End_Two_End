@@ -23,7 +23,7 @@ app.add_middleware(
 )
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-client_path = os.path.join(BASE_DIR, "..", "client")
+CLIENT_DIR = os.path.join(BASE_DIR, "..", "client")
 
 model_path = os.path.join(BASE_DIR, "model", "banglore_home_prices_model.pickle")
 columns_path = os.path.join(BASE_DIR, "model", "columns.json")
@@ -103,10 +103,11 @@ def predict_price(data: HouseData):
 
     return {"estimated_price": price}
 
-app.mount("/static", StaticFiles(directory="../client"), name="static")
+app.mount("/static", StaticFiles(directory=CLIENT_DIR), name="static")
 
 @app.get("/")
 def read_root():
-    file_path = os.path.join(BASE_DIR, "..", "client", "index.html")
-    return FileResponse(file_path)
+    return FileResponse(os.path.join(CLIENT_DIR, "index.html"))
+    
+    
 
